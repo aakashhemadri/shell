@@ -2,11 +2,10 @@
 # @author: Aakash Hemadri
 # @email: aakashhemadri123@gmail.com
 #
-# Example cut commands
+# Example awk commands
 ## --------------------------------------------------------
 # Function definitions
 ## --------------------------------------------------------
-
 function run_command {
     echo "Executing command: $1"
 
@@ -26,40 +25,32 @@ function run_command {
 # Constants & Variables
 ## --------------------------------------------------------
 
-declare -r COMMAND="cut"
+declare -r COMMAND="awk"
 declare -r INPUT="data/input"
 declare -r OUTPUT="data/output"
+declare -r SCRIPT="data/awk_scripts"
 declare -r ERROR="data/error.log"
 declare -r SPACE=" "
 
 ## --------------------------------------------------------
 # Exports
 ## --------------------------------------------------------
-
 export PAGER='/usr/bin/less'
+
+## ------------------------------------ ##
+# Clean Logs & Build directory structure #
+## ------------------------------------ ##
+mkdir -p data/input
+mkdir -p data/output
+rm "data/error.log"
 
 ## --------------------------------------------------------
 # Program
 ## --------------------------------------------------------
 
 echo -e "Hello!\nThis is the set of commands that are related to ${COMMAND}!"
-
-## -------- ##
-# Clean Logs #
-## -------- ##
-rm "data/error.log"
-
 {
-run_command "${COMMAND} -c4 ${INPUT}/file" "Cuts character at position 4."
-run_command "${COMMAND} -c4,6 ${INPUT}/file" "Cuts characters at position 4 & 6."
-run_command "${COMMAND} -c4-7 ${INPUT}/file" "Cuts characters between the range of 4-7."
-run_command "${COMMAND} -c-7 ${INPUT}/file" "Cuts characters until position 7."
-run_command "${COMMAND} -c10- ${INPUT}/file" "Cuts character after position 10."
-run_command "${COMMAND} --delimiter=: -f2 ${INPUT}/file" "Similar to awk, returns second field\nusing the delimeter option -d."
-run_command "${COMMAND} -d: -f1 /etc/passwd" "Retrieves first field of file /etc/passwd"
-run_command "${COMMAND} --delimiter=. -f2 ${INPUT}/filenames" "Retieves the extension of the filenames."
-run_command "${COMMAND} -f 1-2,4- ${INPUT}/data.txt" "Returns range of fields"
-run_command "${COMMAND} -c 3-12 $INPUT/data.txt" "Cuts specific number of characters"
+run_command "${COMMAND} --help" ""
 } | tee "${OUTPUT}/output" 
 echo -e "Output logged at ${OUTPUT}/output"
 if [ -s ${ERROR} ]; then
