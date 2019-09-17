@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int pid;
 int pipe1[2];
 int pipe2[2];
 
@@ -10,7 +9,7 @@ void exec_ps();
 void exec_grep_root();
 void exec_grep_sbin();
 
-int main()
+int main(int argc, char **argv)
 {
   if (pipe(pipe1) == -1)
   {
@@ -60,8 +59,8 @@ int main()
 
 void exec_ps()
 {
-  //Read from stdin already done.
-  //Write to pipe1
+  // read from stdin already done.
+  // write to pipe1
   dup2(pipe1[1], 1);
   close(pipe1[0]);
   close(pipe1[1]);
@@ -72,9 +71,9 @@ void exec_ps()
 
 void exec_grep_root()
 {
-  // input from pipe1
+  // read from pipe1
   dup2(pipe1[0], 0);
-  // output to pipe2
+  // write to pipe2
   dup2(pipe2[1], 1);
   // close fds
   close(pipe1[0]);
@@ -90,9 +89,9 @@ void exec_grep_root()
 
 void exec_grep_sbin()
 {
-  // input from pipe2
+  // read from pipe2
   dup2(pipe2[0], 0);
-  // output to stdout (already done)
+  // write to stdout (already done)
   // close fds
   close(pipe2[0]);
   close(pipe2[1]);
