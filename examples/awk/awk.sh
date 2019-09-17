@@ -42,7 +42,7 @@ export PAGER='/usr/bin/less'
 ## ------------------------------------ ##
 mkdir -p data/input
 mkdir -p data/output
-rm "data/error.log"
+rm -f "data/error.log"
 
 ## --------------------------------------------------------
 # Program
@@ -50,7 +50,7 @@ rm "data/error.log"
 
 echo -e "Hello!\nThis is the set of commands that are related to ${COMMAND}!"
 {
-run_command "${COMMAND} --help" ""
+run_command "${COMMAND} {print NR \$1} ${INPUT}/employees"
 } | tee "${OUTPUT}/output" 
 echo -e "Output logged at ${OUTPUT}/output"
 if [ -s ${ERROR} ]; then
