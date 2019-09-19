@@ -1,0 +1,2 @@
+Executing command: awk {print NR awk.sh} data/input/employees
+#######################################
