@@ -10,14 +10,12 @@ void *tunnel(void *arg)
 {
   if (strcmp(arg, "North") == 0)
   {
-
     while (southcount > 0)
       sem_wait(&mutex);
     northcount++;
   }
   else
   {
-
     while (northcount > 0)
       sem_wait(&mutex);
     southcount++;
